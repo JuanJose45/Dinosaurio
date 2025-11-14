@@ -1,40 +1,31 @@
 ﻿using UnityEngine;
-using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 using System.Collections;
+using UnityEngine.UI;
 
-public class INICIOJUEGO : MonoBehaviour
+public class CountdownManager : MonoBehaviour
 {
-
-    public float cooldown = 2f;
-
-    public void Jugar()
-    {
-
-
-        StartCoroutine(CountdownRoutine());
-    }
-
-
-
     [Header("Referencias a los textos")]
     public GameObject text3;
     public GameObject text2;
     public GameObject text1;
     public GameObject textGo;
-    public GameObject backgroundImage;
+   
 
+    [Header("Fondo de la cuenta atrás")]
+    public GameObject backgroundImage; // 👈 La imagen o panel que quieras mostrar de fondo
 
     [Header("Tiempos")]
-    public float delay = 2f;     // Tiempo entre 3, 2 y 1
+    public float delay = 1f;     // Tiempo entre 3, 2 y 1
     public float goDelay = 2f;   // Tiempo que dura el "GO"
 
-
+  public  void comenzar()
+    {
+        StartCoroutine(CountdownRoutine());
+    }
 
     IEnumerator CountdownRoutine()
     {
-        backgroundImage.SetActive(true);
-        // Asegurarse de que todo empiece desactivado
+        // Asegurar que todo empiece desactivado
         text3.SetActive(false);
         text2.SetActive(false);
         text1.SetActive(false);
@@ -42,8 +33,10 @@ public class INICIOJUEGO : MonoBehaviour
         if (backgroundImage != null)
             backgroundImage.SetActive(false);
 
+        // Activar el fondo
         if (backgroundImage != null)
             backgroundImage.SetActive(true);
+
         // 3
         text3.SetActive(true);
         yield return new WaitForSeconds(delay);
@@ -61,29 +54,14 @@ public class INICIOJUEGO : MonoBehaviour
 
         // GO!
         textGo.SetActive(true);
-        //yield return new WaitForSeconds(goDelay);  // 👈 delay especial solo para "GO"
-        //textGo.SetActive(false);
-        //if (backgroundImage != null)
-        //    backgroundImage.SetActive(false);
+        yield return new WaitForSeconds(goDelay);
+        textGo.SetActive(false);
 
-        StartCoroutine(ReactivarBoton());
+        // Desactivar el fondo
+        if (backgroundImage != null)
+            backgroundImage.SetActive(false);
 
         // Aquí puedes iniciar el juego
         // Ejemplo: playerController.enabled = true;
     }
-
-
-    IEnumerator ReactivarBoton()
-    {
-
-        yield return new WaitForSeconds(cooldown);
-        SceneManager.LoadScene("Juego1");
-
-    }
-
-    public void Salir()
-    {
-        Application.Quit();
-    }
 }
-

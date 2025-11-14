@@ -21,4 +21,17 @@ public class gamemanager : MonoBehaviour
         segundos = (int)tiempo % 60;
         textoTiempo.text = minutos.ToString("D2") + ":" + segundos.ToString("D2");
     }
+
+    public void reiniciar()
+    { 
+    GameObject tiempo 
+    
+    
+    
+    }
+
+
+
+
+
 }
